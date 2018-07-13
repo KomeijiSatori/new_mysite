@@ -1,0 +1,6 @@
+.vscode
+*.pyc
+
+backend/src/new_mysite/settings_local.py
+backend/src/db.sqlite3
+
