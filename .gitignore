@@ -1,4 +1,5 @@
 .vscode
+.idea
 *.pyc
 
 backend/src/new_mysite/settings_local.py

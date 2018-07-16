@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -136,6 +136,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# the login token expire days
+LOGIN_TOKEN_EXPIRE_DAYS = 14
+# the login token length
+LOGIN_TOKEN_LENGTH = 16
 
 # all local settings
 try:

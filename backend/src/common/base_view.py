@@ -1,7 +1,8 @@
 from django.views import View
-from django.http import JsonResponse
-from .consts import ReturnCode, get_return_message
+from .consts import ReturnCode
+from .utils import build_response
 from user.handler import UserHandler
+from user.consts import USER_TOKEN_COOKIE_NAME
 
 
 class BaseView(View):
@@ -13,13 +14,17 @@ class BaseView(View):
 
     def dispatch(self, request, *args, **kwargs):
         # first get the current user
-        if self._permission_handler is not None or self._need_login is not None:
+        if self._permission_handler is not None or self._need_login is True:
             user_handler = UserHandler()
-            self.current_user = user_handler.get_current_user_from_request(request)
+            user_token_str = request.COOKIES.get(USER_TOKEN_COOKIE_NAME)
+            if user_token_str is not None: 
+                self.current_user = user_handler.get_current_user_from_token_str(user_token_str)
+            else:
+                self.current_user = None
             if self.current_user is None:
                 return_code = ReturnCode.NotLogIn
-                resp = {'code': return_code, 'message': get_return_message(return_code)}
-                return JsonResponse(resp)
+                resp = build_response(return_code)
+                return resp
         if self._permission_handler is not None:
             # in the current version we don't implement this
             pass
