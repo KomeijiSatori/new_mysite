@@ -31,6 +31,10 @@ def redis_hset(key, field, value):
     conn = get_redis_connection()
     conn.hset(key, field, value)
 
+def redis_hdel(key, field):
+    conn = get_redis_connection()
+    conn.hdel(key, field)
+
 
 # request parameter utils
 def get_params(request):
@@ -122,7 +126,7 @@ def trans_params(params, attrs):
         except Exception as e:
             err_msg = "param %s trans err, detail %s" % (params, e)
             raise Exception(err_msg)
-    return params 
+    return params
 
 
 # request response utils

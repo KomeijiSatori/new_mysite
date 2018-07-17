@@ -33,7 +33,7 @@ class LoginView(BaseView):
             logging.error(e)
             return None, e
         return clean_params, None
-    
+
     def post(self, request, *args, **kwargs):
         params, err = self.get_clean_params(request)
         if err is not None:
@@ -58,6 +58,24 @@ class LoginView(BaseView):
             code = ReturnCode.AuthenticationFail
             resp = build_response(code)
             return resp
+
+
+class LogoutView(BaseView):
+    def __init__(self):
+        super(LogoutView, self).__init__()
+        self._need_login = True
+        self.http_method_names = ['get']
+
+    def get(self, request, *args, **kwargs):
+        handler = UserHandler()
+        user_id = self.current_user.id
+        handler.remove_token_for_current_user(user_id)
+        # return response
+        code = ReturnCode.Success
+        resp = build_response(code)
+        # set cookie
+        resp.set_cookie(USER_TOKEN_COOKIE_NAME, '')
+        return resp
 
 
 class TestView(BaseView):

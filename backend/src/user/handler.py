@@ -55,3 +55,6 @@ class UserHandler(object):
         # return the token to client
         user_token_str = self.user_service.get_jwt_token_from_login_info(user_id, login_token)
         return user_token_str
+
+    def remove_token_for_current_user(self, user_id):
+        self.user_service.remove_login_info_from_redis(user_id)

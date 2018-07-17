@@ -2,7 +2,7 @@ import pickle
 import json
 from django.contrib.auth.models import User
 
-from common.utils import redis_hget, redis_hset
+from common.utils import redis_hget, redis_hset, redis_hdel
 from .utils import jwt_decode, jwt_encode
 from .consts import USER_CACHE_HSET_NAME, USER_TOKEN_USER_ID_NAME, USER_TOKEN_VALID_TOKEN_NAME, \
     USER_TOKEN_HSET_NAME, REDIS_TOKEN_VALID_TOKEN_NAME, REDIS_TOKEN_EXPIRE_TIME_NAME
@@ -86,7 +86,7 @@ class UserService(object):
         :param user_id: int
         :param token: str
         :param expire_time: float
-        :return: 
+        :return:
         """
         redis_token_info = {}
         redis_token_info[REDIS_TOKEN_VALID_TOKEN_NAME] = token
@@ -100,7 +100,7 @@ class UserService(object):
         :param user_id: int
         :param user_token: str
         :param expire_time: float
-        :return: 
+        :return:
         """
         user_token_info = {}
         user_token_info[USER_TOKEN_USER_ID_NAME] = user_id
@@ -108,3 +108,10 @@ class UserService(object):
         user_token_str = jwt_encode(user_token_info)
         return user_token_str
 
+    def remove_login_info_from_redis(self, user_id):
+        """
+        Remove the user login info from redis
+        :param user_id: int
+        :return:
+        """
+        redis_hdel(USER_TOKEN_HSET_NAME, user_id)
