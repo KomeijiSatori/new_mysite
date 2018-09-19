@@ -2,6 +2,10 @@
 .idea
 *.pyc
 
-backend/src/new_mysite/settings_local.py
-backend/src/db.sqlite3
+frontend/.nuxt
+frontend/node_modules
+
+backend/new_mysite/settings_local.py
+backend/static
+backend/db.sqlite3
 

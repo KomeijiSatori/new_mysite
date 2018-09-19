@@ -1,6 +1,6 @@
 import logging
-from django.http import JsonResponse
 from django.contrib.auth import authenticate
+from django.conf import settings
 
 from .handler import UserHandler
 from .consts import USER_TOKEN_COOKIE_NAME
@@ -48,10 +48,12 @@ class LoginView(BaseView):
             token = handler.get_token_str_for_current_user(user_id)
             # return response
             code = ReturnCode.Success
+            message = "Login Success"
             data = {"user_name": user.username, "user_id": user.id}
-            resp = build_response(code, data=data)
+            resp = build_response(code, message=message, data=data)
             # set cookie
-            resp.set_cookie(USER_TOKEN_COOKIE_NAME, token)
+            max_age = settings.LOGIN_TOKEN_EXPIRE_DAYS * 86400
+            resp.set_cookie(USER_TOKEN_COOKIE_NAME, token, max_age=max_age)
             return resp
         else:
             # the user fail the authentication
@@ -72,18 +74,24 @@ class LogoutView(BaseView):
         handler.remove_token_for_current_user(user_id)
         # return response
         code = ReturnCode.Success
-        resp = build_response(code)
+        message = "Logout Success"
+        resp = build_response(code, message=message)
         # set cookie
         resp.set_cookie(USER_TOKEN_COOKIE_NAME, '')
         return resp
 
 
-class TestView(BaseView):
+class UserInfoView(BaseView):
     def __init__(self):
-        super(TestView, self).__init__()
+        super(UserInfoView, self).__init__()
         self._need_login = True
         self.http_method_names = ['get']
 
     def get(self, request, *args, **kwargs):
-        name = self.current_user.username
-        return JsonResponse({"user_name": name})
+        data = {
+            "user_name": self.current_user.username,
+            "user_id": self.current_user.id,
+        }
+        code = ReturnCode.Success
+        resp = build_response(code, data=data)
+        return resp
