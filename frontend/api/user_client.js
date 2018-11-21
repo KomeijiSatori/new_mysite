@@ -6,19 +6,19 @@ class UserClient extends BaseApiClient {
         super(sub_url);
     }
 
-    async login (payloads) {
+    login (payloads) {
         const url = 'login/';
-        return await this.client.post(url, payloads);
+        return this.client.post(url, payloads);
     }
 
-    async logout () {
+    logout () {
         const url = 'logout/';
-        return await this.client.get(url);
+        return this.client.get(url);
     }
 
-    async get_user_info () {
+    get_user_info (headers={}) {
         const url = 'user_info/';
-        return await this.client.get(url);
+        return this.client.get(url, {}, { headers: headers });
     }
 }
 

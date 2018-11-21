@@ -1,8 +1,9 @@
 import ApiClient from '@/utils/api_client';
 
 const client_config = {
-    baseURL: '/api/',
+    baseURL: process.server ? 'http://127.0.0.1/api/' : '/api/',
     timeout: 20000,
+    withCredentials: true,
 };
 
 class BaseApiClient {

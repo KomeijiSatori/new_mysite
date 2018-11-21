@@ -1,7 +1,9 @@
 {
   "name": "mysite",
   "scripts": {
-    "dev": "nuxt"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start"
   },
   "dependencies": {
     "ajv": "^6.5.0",

@@ -10,7 +10,6 @@ class ApiClient {
             return response.data;
         }, function (error) {
             error = error.response || error;
-            console.log('error', error);
             if (!error.status) {
                 return Promise.reject({
                     code: 999,
@@ -37,11 +36,11 @@ class ApiClient {
         this.client = this.get_axios_client();
     }
     get (url, params, config) {
-        let mergedConfig = Object.assign({}, config, this.client_config, {url: url, params: params, method: 'get'});
+        let mergedConfig = Object.assign({}, this.client_config, config, {url: url, params: params, method: 'get'});
         return this.request(mergedConfig);
     }
     post (url, data, config) {
-        let mergedConfig = Object.assign({}, config, this.client_config, {url: url, data: data, method: 'post'});
+        let mergedConfig = Object.assign({}, this.client_config, config, {url: url, data: data, method: 'post'});
         return this.request(mergedConfig);
     }
     request (config) {
@@ -50,7 +49,6 @@ class ApiClient {
                 return response;
             })
             .catch(response => {
-                console.log('Error Occurs. Response: ' + response);
                 return Promise.reject(response);
           });
     }
