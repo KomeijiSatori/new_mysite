@@ -16,9 +16,9 @@ class UserClient extends BaseApiClient {
         return this.client.get(url);
     }
 
-    get_user_info (headers={}) {
+    get_user_info () {
         const url = 'user_info/';
-        return this.client.get(url, {}, { headers: headers });
+        return this.client.get(url);
     }
 }
 

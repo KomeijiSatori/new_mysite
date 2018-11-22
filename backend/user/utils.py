@@ -27,6 +27,8 @@ def jwt_decode(encoded_data):
     :return: dict, the data
     """
     try:
+        if encoded_data == "":
+            return None
         key = settings.LOGIN_SECRET
         payload = jwt.decode(encoded_data, key)
     except Exception:
