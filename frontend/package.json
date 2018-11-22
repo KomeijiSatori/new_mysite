@@ -10,7 +10,7 @@
     "axios": "^0.18.0",
     "iview": "^3.1.1",
     "iview-loader": "^1.2.2",
-    "nuxt": "^1.4.0"
+    "nuxt": "^2.3.2"
   },
   "devDependencies": {
     "iview-loader": "^1.2.2"
