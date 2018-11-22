@@ -2,6 +2,9 @@
 
 This is the source code of mysite 2.0, which is completely different from [the old one][1]
 
+
+New site is available on http://chongliu.me:8888. For test, you can login as `test_user` for password `asdfjkl;`. Please note that you should wait until the page is fully loaded, it may take some time for your first visit.
+
 The code contains two parts. The frontend code and the backend code. But during the development, I will firstly build the backend side.
 
 The main solution to build the website is that we use [nuxt][2] to build the frontend side(through the node server), and [django][3]. 
@@ -118,9 +121,7 @@ server {
 
 You **should** change the alias of location static to your own static file folder(the folder where collectstatic command put files in).
 
-This config file tells nginx that I will listen to port 80(other port will also be ok), when a url comes with prefix admin(the default django admin pages),
-
-we pass the request to the django server. We point the `/static` to django's static file directory, so the django admin pages can find static files.
+This config file tells nginx that I will listen to port 80(other port will also be ok), when a url comes with prefix admin(the default django admin pages), we pass the request to the django server. We point the `/static` to django's static file directory, so the django admin pages can find static files.
 
 Since our api call will have a prefix `/api`, so when a url comes with prefix api, pass it to django server to deal with the api call.
 
