@@ -7,9 +7,10 @@ export default function (context) {
         let headers = {}
         if (process.server) {
             // parse the client's header to server to allow server to get data
-            headers = {'Cookie' : context.req.headers.cookie}
+            headers = {'Cookie' : context.req.headers.cookie};
+            process.headers = headers;
         }
-        return UserClient.get_user_info(headers)
+        return UserClient.get_user_info()
         .then(rsp => {
             if (rsp.code == 0) {
                 context.store.commit("login", {

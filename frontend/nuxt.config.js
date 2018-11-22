@@ -1,6 +1,6 @@
 module.exports = {
     build: {
-        vendor: ['~/plugins/iview']
+        vendor: ['~/plugins/iview', 'axios']
     },
     plugins: ['~/plugins/iview'],
     css: [

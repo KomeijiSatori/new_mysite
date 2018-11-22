@@ -36,11 +36,21 @@ class ApiClient {
         this.client = this.get_axios_client();
     }
     get (url, params, config) {
-        let mergedConfig = Object.assign({}, this.client_config, config, {url: url, params: params, method: 'get'});
+        var header_config = {}
+        if (process.headers)
+        {
+            header_config = { headers: process.headers };
+        }
+        let mergedConfig = Object.assign({}, this.client_config, header_config, config, {url: url, params: params, method: 'get'});
         return this.request(mergedConfig);
     }
     post (url, data, config) {
-        let mergedConfig = Object.assign({}, this.client_config, config, {url: url, data: data, method: 'post'});
+        var header_config = {}
+        if (process.headers)
+        {
+            header_config = { headers: process.headers };
+        }
+        let mergedConfig = Object.assign({}, this.client_config, header_config, config, {url: url, data: data, method: 'post'});
         return this.request(mergedConfig);
     }
     request (config) {
